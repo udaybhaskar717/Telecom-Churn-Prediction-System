@@ -1,0 +1,7 @@
+[ 2025-02-05 08:05:57,371 ] 18 root - INFO - Entering the Try block
+[ 2025-02-05 08:05:57,372 ] 21 root - ERROR - Exception occurred
+Traceback (most recent call last):
+  File "d:\MLops\Custer Churn Prediction System\customer_churn\Exception\exception.py", line 19, in <module>
+    a = 1 / 0  # Intentional division by zero error
+        ~~^~~
+ZeroDivisionError: division by zero

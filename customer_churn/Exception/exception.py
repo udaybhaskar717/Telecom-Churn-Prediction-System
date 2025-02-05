@@ -1,6 +1,5 @@
 import sys
-from customer_churn.Logging.logger import logger
-
+from customer_churn.Logging.logger import logging
 
 # 2️⃣ Define Custom Exception Class
 class CustomerChurnException(Exception):  # ✅ Inherits from Exception
@@ -16,8 +15,8 @@ class CustomerChurnException(Exception):  # ✅ Inherits from Exception
 # 3️⃣ Exception Handling with Logging
 if __name__ == '__main__':
     try:
-        logger.info("Entering the Try block")
+        logging.info("Entering the Try block")
         a = 1 / 0  # Intentional division by zero error
     except Exception as e:
-        logger.error("Exception occurred", exc_info=True)
+        logging.error("Exception occurred", exc_info=True)
         raise CustomerChurnException(e, sys)  # Raise custom exception
