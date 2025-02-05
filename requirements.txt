@@ -1,0 +1,10 @@
+pandas
+numpy
+scikit-learn
+seaborn
+mlflow
+python-dotenv
+pymongo
+certifi
+
+-e .
