@@ -6,5 +6,7 @@ mlflow
 python-dotenv
 pymongo
 certifi
+pymongo[srv]==3.12
+pymongo
 
--e .
+# -e .
