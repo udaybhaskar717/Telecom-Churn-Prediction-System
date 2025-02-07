@@ -48,7 +48,13 @@ class CustomerChurnDataExtract:
             self.mongo_client = pymongo.MongoClient(self.MONGO_DB_URL, tlsCAFile=ca)
             self.db = self.mongo_client[self.DATABASE]
             self.collection = self.db[self.Collection]
-            logging.info(f"Connected to MongoDB. Inserting {len(records)} records into collection: {self.Collection}.")
+
+            # Clear the existing data in the collection before inserting new records
+            logging.info(f"Clearing existing data in collection: {self.Collection}")
+            self.collection.delete_many({})  # This clears all data in the collection
+            logging.info("Existing data cleared successfully.")
+
+            logging.info(f"Inserting {len(records)} records into collection: {self.Collection}.")
             self.collection.insert_many(records)
             logging.info(f"Successfully inserted {len(records)} records into MongoDB.")
         except Exception as e:

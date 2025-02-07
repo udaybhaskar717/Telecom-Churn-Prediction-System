@@ -1,7 +1,0 @@
-[ 2025-02-05 08:01:12,888 ] 19 customer_churn_logger - INFO - Entering the Try block
-[ 2025-02-05 08:01:12,890 ] 22 customer_churn_logger - ERROR - Exception occurred
-Traceback (most recent call last):
-  File "d:\MLops\Custer Churn Prediction System\customer_churn\Exception\exception.py", line 20, in <module>
-    a = 1 / 0  # Intentional division by zero error
-        ~~^~~
-ZeroDivisionError: division by zero

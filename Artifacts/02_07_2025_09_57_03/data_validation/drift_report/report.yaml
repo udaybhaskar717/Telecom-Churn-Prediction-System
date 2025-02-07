@@ -1,0 +1,63 @@
+Churn:
+  drift_status: false
+  p_value: 1.0
+Contract:
+  drift_status: false
+  p_value: 0.999863545911195
+Dependents:
+  drift_status: false
+  p_value: 0.7803625998203498
+DeviceProtection:
+  drift_status: false
+  p_value: 0.9964442985141737
+InternetService:
+  drift_status: false
+  p_value: 0.7431358610616862
+MonthlyCharges:
+  drift_status: false
+  p_value: 0.2439994597936106
+MultipleLines:
+  drift_status: false
+  p_value: 0.9929003060450645
+OnlineBackup:
+  drift_status: false
+  p_value: 0.9999999999999724
+OnlineSecurity:
+  drift_status: false
+  p_value: 0.999999984390277
+PaperlessBilling:
+  drift_status: false
+  p_value: 0.6550582305103524
+Partner:
+  drift_status: false
+  p_value: 0.7933484467232556
+PaymentMethod:
+  drift_status: false
+  p_value: 0.8252585659762528
+PhoneService:
+  drift_status: false
+  p_value: 0.9999960912365842
+SeniorCitizen:
+  drift_status: false
+  p_value: 0.9988693154819227
+StreamingMovies:
+  drift_status: false
+  p_value: 0.9352087226073819
+StreamingTV:
+  drift_status: false
+  p_value: 0.999916778346413
+TechSupport:
+  drift_status: false
+  p_value: 0.8112546832001603
+TotalCharges:
+  drift_status: false
+  p_value: 0.807153031983498
+customerID:
+  drift_status: false
+  p_value: 0.11918282938010047
+gender:
+  drift_status: false
+  p_value: 0.7162910440204093
+tenure:
+  drift_status: true
+  p_value: 0.042035806156368025
