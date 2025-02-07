@@ -4,6 +4,7 @@ import numpy as np
 import pandas as pd
 from sklearn.impute import KNNImputer
 from sklearn.pipeline import Pipeline
+from imblearn.over_sampling import SMOTE
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.compose import ColumnTransformer
 
@@ -127,6 +128,12 @@ class DataTransformation:
             transformed_input_train_feature = preprocessor_object.transform(input_feature_train_df)
             transformed_input_test_feature = preprocessor_object.transform(input_feature_test_df)
             logging.info("Input features transformed successfully")
+
+            logging.info("Aplaying SMOTE Over sampling...")
+            smote = SMOTE()
+            transformed_input_train_feature, target_feature_train_df = smote.fit_resample(
+                transformed_input_train_feature, target_feature_train_df)
+            logging.info("SMOTE Over sampling is applied")
 
             # Combine transformed features with target features
             logging.info("Combining transformed features with target features")

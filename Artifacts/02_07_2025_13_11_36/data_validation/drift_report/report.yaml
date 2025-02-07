@@ -1,63 +1,63 @@
 Churn:
   drift_status: false
-  p_value: 1.0
+  p_value: 0.9999999935481984
 Contract:
   drift_status: false
-  p_value: 0.999863545911195
+  p_value: 0.0952564516374109
 Dependents:
   drift_status: false
-  p_value: 0.7803625998203498
+  p_value: 0.4865837088196568
 DeviceProtection:
   drift_status: false
-  p_value: 0.9964442985141737
+  p_value: 0.4279529209890566
 InternetService:
   drift_status: false
-  p_value: 0.7431358610616862
+  p_value: 0.9615246897560101
 MonthlyCharges:
   drift_status: false
-  p_value: 0.2439994597936106
+  p_value: 0.9874969411973584
 MultipleLines:
   drift_status: false
-  p_value: 0.9929003060450645
+  p_value: 1.0
 OnlineBackup:
   drift_status: false
-  p_value: 0.9999999999999724
+  p_value: 0.36206187773369647
 OnlineSecurity:
   drift_status: false
-  p_value: 0.999999984390277
+  p_value: 0.5374181996922924
 PaperlessBilling:
   drift_status: false
-  p_value: 0.6550582305103524
+  p_value: 0.4112966279754637
 Partner:
   drift_status: false
-  p_value: 0.7933484467232556
+  p_value: 0.21066371021979374
 PaymentMethod:
   drift_status: false
-  p_value: 0.8252585659762528
+  p_value: 0.9999953597309859
 PhoneService:
   drift_status: false
-  p_value: 0.9999960912365842
+  p_value: 1.0
 SeniorCitizen:
   drift_status: false
-  p_value: 0.9988693154819227
+  p_value: 0.9815110877330243
 StreamingMovies:
   drift_status: false
-  p_value: 0.9352087226073819
+  p_value: 0.9849094825537209
 StreamingTV:
   drift_status: false
-  p_value: 0.999916778346413
+  p_value: 0.9992437896434528
 TechSupport:
   drift_status: false
-  p_value: 0.8112546832001603
+  p_value: 0.32374925624260825
 TotalCharges:
   drift_status: false
-  p_value: 0.807153031983498
+  p_value: 0.554186711399902
 customerID:
   drift_status: false
-  p_value: 0.11918282938010047
+  p_value: 0.7949851724160739
 gender:
   drift_status: false
-  p_value: 0.7162910440204093
+  p_value: 1.0
 tenure:
-  drift_status: true
-  p_value: 0.042035806156368025
+  drift_status: false
+  p_value: 0.17995656981434588
