@@ -36,7 +36,7 @@ class DataIngestion:
             Collection = mongo_client[database_name][collection_name]
 
             logging.info(f"Fetching data from MongoDB: Database = {database_name}, Collection = {collection_name}")
-            df = pd.DataFrame(list(Collection.find()))  # ✅ Fixed this issue
+            df = pd.DataFrame(list(Collection.find())) 
 
             if df.empty:
                 logging.warning("No data found in MongoDB collection.")
@@ -44,9 +44,7 @@ class DataIngestion:
             if "_id" in df.columns.to_list():
                 logging.info("Dropping '_id' column from DataFrame")
                 df = df.drop(columns=["_id"], axis=1)
-
-            df.replace({"na": np.nan}, inplace=True)
-            logging.info(f"Exported {df.shape[0]} rows from MongoDB successfully.")
+            df.replace({"na":np.nan},inplace=True)
             return df
         except Exception as e:
             raise CustomerChurnException(e, sys)

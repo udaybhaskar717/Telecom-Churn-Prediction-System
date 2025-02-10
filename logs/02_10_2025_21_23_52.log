@@ -1,0 +1,82 @@
+[ 2025-02-10 21:23:52,535 ] 160 numexpr.utils - INFO - NumExpr defaulting to 8 threads.
+[ 2025-02-10 21:24:08,261 ] 38 root - INFO - Start data Ingestion
+[ 2025-02-10 21:24:08,263 ] 23 root - INFO - Initialized Data Ingestion with config: <customer_churn.entity.config_entity.DataIngestionConfig object at 0x000001F47518D160>
+[ 2025-02-10 21:24:08,263 ] 105 root - INFO - Starting data ingestion process...
+[ 2025-02-10 21:24:08,263 ] 107 root - INFO - Fetching data from MongoDB...
+[ 2025-02-10 21:24:08,264 ] 32 root - INFO - Connecting to MongoDB...
+[ 2025-02-10 21:24:09,469 ] 38 root - INFO - Fetching data from MongoDB: Database = UDAYML, Collection = CustomerChurn
+[ 2025-02-10 21:24:12,164 ] 45 root - INFO - Dropping '_id' column from DataFrame
+[ 2025-02-10 21:24:12,202 ] 110 root - INFO - Saving raw data to feature store...
+[ 2025-02-10 21:24:12,202 ] 60 root - INFO - Creating feature store directory: Artifacts\02_10_2025_21_23_52\data_ingestion\feature_store\Telecome_Churn_Data
+[ 2025-02-10 21:24:12,203 ] 63 root - INFO - Saving raw data to feature store at: Artifacts\02_10_2025_21_23_52\data_ingestion\feature_store\Telecome_Churn_Data/WA_Fn-UseC_-Telco-Customer-Churn.csv
+[ 2025-02-10 21:24:12,308 ] 66 root - INFO - Data successfully saved in feature store.
+[ 2025-02-10 21:24:12,308 ] 113 root - INFO - Splitting data into train and test sets...
+[ 2025-02-10 21:24:12,310 ] 76 root - INFO - Performing train-test split on the dataframe...
+[ 2025-02-10 21:24:12,316 ] 80 root - INFO - Train-test split completed. Train size: 5634, Test size: 1409
+[ 2025-02-10 21:24:12,316 ] 83 root - INFO - Creating directory for train/test files: Artifacts\02_10_2025_21_23_52\data_ingestion\data_ingestion
+[ 2025-02-10 21:24:12,317 ] 86 root - INFO - Exporting train file to: Artifacts\02_10_2025_21_23_52\data_ingestion\data_ingestion\train.csv
+[ 2025-02-10 21:24:12,376 ] 91 root - INFO - Exporting test file to: Artifacts\02_10_2025_21_23_52\data_ingestion\data_ingestion\test.csv
+[ 2025-02-10 21:24:12,390 ] 96 root - INFO - Train and test files exported successfully.
+[ 2025-02-10 21:24:12,392 ] 116 root - INFO - Creating DataIngestionArtifact...
+[ 2025-02-10 21:24:12,392 ] 122 root - INFO - Data ingestion process completed successfully.
+[ 2025-02-10 21:24:12,399 ] 41 root - INFO - Data Ingestion completed and artifact: DataIngestionArtifact(trained_file_path='Artifacts\\02_10_2025_21_23_52\\data_ingestion\\data_ingestion\\train.csv', test_file_path='Artifacts\\02_10_2025_21_23_52\\data_ingestion\\data_ingestion\\test.csv')
+[ 2025-02-10 21:24:12,400 ] 14 root - INFO - Initializing DataValidation component.
+[ 2025-02-10 21:24:12,400 ] 17 root - INFO - Reading schema configuration from: data_schema\schema.yaml
+[ 2025-02-10 21:24:12,409 ] 19 root - INFO - Schema configuration loaded successfully.
+[ 2025-02-10 21:24:12,409 ] 51 root - INFO - Initiate the data Validation
+[ 2025-02-10 21:24:12,409 ] 130 root - INFO - Starting data validation process.
+[ 2025-02-10 21:24:12,409 ] 27 root - INFO - Reading data from file: Artifacts\02_10_2025_21_23_52\data_ingestion\data_ingestion\train.csv
+[ 2025-02-10 21:24:12,448 ] 27 root - INFO - Reading data from file: Artifacts\02_10_2025_21_23_52\data_ingestion\data_ingestion\test.csv
+[ 2025-02-10 21:24:12,466 ] 133 root - INFO - Training and testing datasets loaded successfully.
+[ 2025-02-10 21:24:12,466 ] 35 root - INFO - Validating number of columns in the dataset.
+[ 2025-02-10 21:24:12,466 ] 38 root - INFO - Column validation successful.
+[ 2025-02-10 21:24:12,466 ] 35 root - INFO - Validating number of columns in the dataset.
+[ 2025-02-10 21:24:12,466 ] 38 root - INFO - Column validation successful.
+[ 2025-02-10 21:24:12,466 ] 60 root - INFO - Validating uniqueness of customerID in the dataset.
+[ 2025-02-10 21:24:12,467 ] 64 root - INFO - All customerID values are unique.
+[ 2025-02-10 21:24:12,467 ] 72 root - INFO - Validating categorical values in the dataset.
+[ 2025-02-10 21:24:12,476 ] 77 root - INFO - All categorical values are valid.
+[ 2025-02-10 21:24:12,476 ] 148 root - INFO - Checking for dataset drift between training and testing datasets.
+[ 2025-02-10 21:24:12,476 ] 101 root - INFO - Detecting dataset drift between base and current datasets.
+[ 2025-02-10 21:24:12,782 ] 120 root - INFO - Saving drift report to: Artifacts\02_10_2025_21_23_52\data_validation\drift_report\report.yaml
+[ 2025-02-10 21:24:12,790 ] 122 root - INFO - Dataset drift detection completed. Drift status: True
+[ 2025-02-10 21:24:12,791 ] 152 root - INFO - Directory created for validated data: Artifacts\02_10_2025_21_23_52\data_validation\validated
+[ 2025-02-10 21:24:12,791 ] 154 root - INFO - Saving validated training and testing datasets.
+[ 2025-02-10 21:24:12,862 ] 157 root - INFO - Validated datasets saved successfully.
+[ 2025-02-10 21:24:12,863 ] 25 root - INFO - Initializing DataTransformation class
+[ 2025-02-10 21:24:12,863 ] 28 root - INFO - DataTransformation class initialized successfully
+[ 2025-02-10 21:24:12,863 ] 99 root - INFO - Entered initiate_data_transformation method of DataTransformation class
+[ 2025-02-10 21:24:12,863 ] 101 root - INFO - Starting data transformation process
+[ 2025-02-10 21:24:12,863 ] 104 root - INFO - Reading training and testing data
+[ 2025-02-10 21:24:12,920 ] 107 root - INFO - Training data shape: (5634, 21), Testing data shape: (1409, 21)
+[ 2025-02-10 21:24:12,920 ] 110 root - INFO - Splitting input and target features
+[ 2025-02-10 21:24:12,928 ] 116 root - INFO - Input and target features split successfully
+[ 2025-02-10 21:24:12,929 ] 119 root - INFO - Getting the preprocessor object
+[ 2025-02-10 21:24:12,929 ] 54 root - INFO - Entered get_data_transformer_object method of DataTransformation class
+[ 2025-02-10 21:24:12,929 ] 64 root - INFO - Identified numerical features: ['tenure', 'MonthlyCharges', 'TotalCharges']
+[ 2025-02-10 21:24:12,929 ] 65 root - INFO - Identified categorical features: ['gender', 'SeniorCitizen', 'Partner', 'Dependents', 'PhoneService', 'MultipleLines', 'InternetService', 'OnlineSecurity', 'OnlineBackup', 'DeviceProtection', 'TechSupport', 'StreamingTV', 'StreamingMovies', 'Contract', 'PaperlessBilling', 'PaymentMethod']
+[ 2025-02-10 21:24:12,929 ] 76 root - INFO - Numerical pipeline created with custom preprocessing, KNNImputer, and StandardScaler
+[ 2025-02-10 21:24:12,929 ] 82 root - INFO - Categorical pipeline created with OneHotEncoder
+[ 2025-02-10 21:24:12,929 ] 89 root - INFO - ColumnTransformer created with custom preprocessor, numerical, and categorical pipelines
+[ 2025-02-10 21:24:12,929 ] 91 root - INFO - Exiting get_data_transformer_object method of DataTransformation class
+[ 2025-02-10 21:24:13,021 ] 122 root - INFO - Preprocessor object fitted successfully
+[ 2025-02-10 21:24:13,021 ] 125 root - INFO - Transforming input features
+[ 2025-02-10 21:24:13,092 ] 128 root - INFO - Input features transformed successfully
+[ 2025-02-10 21:24:13,092 ] 130 root - INFO - Applying SMOTE Over sampling...
+[ 2025-02-10 21:24:13,448 ] 134 root - INFO - SMOTE Over sampling is applied
+[ 2025-02-10 21:24:13,448 ] 137 root - INFO - Combining transformed features with target features
+[ 2025-02-10 21:24:13,451 ] 140 root - INFO - Transformed data combined with target features
+[ 2025-02-10 21:24:13,451 ] 143 root - INFO - Saving transformed data
+[ 2025-02-10 21:24:13,458 ] 146 root - INFO - Transformed data saved successfully
+[ 2025-02-10 21:24:13,459 ] 149 root - INFO - Saving preprocessor object
+[ 2025-02-10 21:24:13,459 ] 48 root - INFO - Entered the save_object method of MainUtils class
+[ 2025-02-10 21:24:13,461 ] 52 root - INFO - Exited the save_object method of MainUtils class
+[ 2025-02-10 21:24:13,461 ] 151 root - INFO - Preprocessor object saved successfully
+[ 2025-02-10 21:24:13,461 ] 154 root - INFO - Preparing DataTransformationArtifact
+[ 2025-02-10 21:24:13,461 ] 160 root - INFO - DataTransformationArtifact prepared successfully
+[ 2025-02-10 21:24:13,462 ] 162 root - INFO - Exiting initiate_data_transformation method of DataTransformation class
+[ 2025-02-10 21:26:53,860 ] 48 root - INFO - Entered the save_object method of MainUtils class
+[ 2025-02-10 21:26:53,873 ] 52 root - INFO - Exited the save_object method of MainUtils class
+[ 2025-02-10 21:26:53,874 ] 48 root - INFO - Entered the save_object method of MainUtils class
+[ 2025-02-10 21:26:53,998 ] 52 root - INFO - Exited the save_object method of MainUtils class
+[ 2025-02-10 21:26:53,998 ] 127 root - INFO - Model trainer artifact: ModelTrainerArtifact(trained_model_file_path='Artifacts\\02_10_2025_21_23_52\\model_trainer\\trained_model\\model.pkl', train_metric_artifact=ClassificationMetricArtifact(f1_score=0.8646589691703369, precision_score=0.848399906563887, recall_score=0.8815533980582524), test_metric_artifact=ClassificationMetricArtifact(f1_score=0.6167979002624672, precision_score=0.5773955773955773, recall_score=0.6619718309859155))

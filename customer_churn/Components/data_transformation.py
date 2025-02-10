@@ -5,7 +5,7 @@ import pandas as pd
 from sklearn.impute import KNNImputer
 from sklearn.pipeline import Pipeline
 from imblearn.over_sampling import SMOTE
-from sklearn.preprocessing import OneHotEncoder, StandardScaler
+from sklearn.preprocessing import OneHotEncoder, StandardScaler, FunctionTransformer
 from sklearn.compose import ColumnTransformer
 
 from customer_churn.Constants.training_pipeline import TARGET_COLUMN, DATA_TRANSFORMATION_IMPUTER_PARAMS
@@ -29,33 +29,26 @@ class DataTransformation:
         except Exception as e:
             logging.error(f"Error initializing DataTransformation class: {e}")
             raise CustomerChurnException(e, sys)
-
+        
     @staticmethod
     def read_data(file_path) -> pd.DataFrame:
         try:
             logging.info(f"Reading data from file: {file_path}")
             df = pd.read_csv(file_path)
             logging.info(f"Data read successfully with shape: {df.shape}")
-
-            # Drop irrelevant column
-            logging.info("Dropping 'customerID' column as it is irrelevant")
-            df.drop(columns=['customerID'], axis=1, inplace=True)
-            logging.info("'customerID' column dropped successfully")
-
-            # Convert TotalCharges to numeric
-            logging.info("Converting 'TotalCharges' column to numeric")
-            df['TotalCharges'] = pd.to_numeric(df['TotalCharges'], errors='coerce')
-            logging.info("'TotalCharges' column converted to numeric successfully")
-
-            # Drop rows where tenure == 0
-            logging.info("Dropping rows where 'tenure' is 0")
-            df = df[df['tenure'] > 0]
-            logging.info(f"Rows with 'tenure' == 0 dropped. Updated data shape: {df.shape}")
-
             return df
         except Exception as e:
-            logging.error(f"Error reading or preprocessing data from {file_path}: {e}")
+            logging.error(f"Error reading data from {file_path}: {e}")
             raise CustomerChurnException(e, sys)
+    
+    @staticmethod
+    def replace_empty_with_nan(X):
+        """Replace empty strings in 'TotalCharges' column with NaN and convert to float."""
+        X = X.copy()
+        if isinstance(X, pd.DataFrame):
+            if 'TotalCharges' in X.columns:
+                X['TotalCharges'] = X['TotalCharges'].replace(" ", np.nan).astype(float)
+        return X
 
     def get_data_transformer_object(self) -> ColumnTransformer:
         logging.info("Entered get_data_transformer_object method of DataTransformation class")
@@ -71,12 +64,16 @@ class DataTransformation:
             logging.info(f"Identified numerical features: {numerical_features}")
             logging.info(f"Identified categorical features: {categorical_features}")
 
+            # Custom preprocessing step
+            custom_preprocessor = FunctionTransformer(self.replace_empty_with_nan)
+
             # Pipeline for numerical features
             num_pipeline = Pipeline([
+                ("custom_preprocessor", custom_preprocessor),  # Step to replace " " with NaN
                 ("imputer", KNNImputer(**DATA_TRANSFORMATION_IMPUTER_PARAMS)),
                 ("scaler", StandardScaler())
             ])
-            logging.info("Numerical pipeline created with KNNImputer and StandardScaler")
+            logging.info("Numerical pipeline created with custom preprocessing, KNNImputer, and StandardScaler")
 
             # Pipeline for categorical features
             cat_pipeline = Pipeline([
@@ -89,10 +86,11 @@ class DataTransformation:
                 ("num", num_pipeline, numerical_features),
                 ("cat", cat_pipeline, categorical_features)
             ])
-            logging.info("ColumnTransformer created with numerical and categorical pipelines")
+            logging.info("ColumnTransformer created with custom preprocessor, numerical, and categorical pipelines")
 
             logging.info("Exiting get_data_transformer_object method of DataTransformation class")
             return preprocessor
+
         except Exception as e:
             logging.error(f"Error in get_data_transformer_object method: {e}")
             raise CustomerChurnException(e, sys)
@@ -104,8 +102,8 @@ class DataTransformation:
 
             # Read training and testing data
             logging.info("Reading training and testing data")
-            train_df = self.read_data(self.data_validation_artifact.valid_train_file_path)
-            test_df = self.read_data(self.data_validation_artifact.valid_test_file_path)
+            train_df = pd.read_csv(self.data_validation_artifact.valid_train_file_path)
+            test_df = pd.read_csv(self.data_validation_artifact.valid_test_file_path)
             logging.info(f"Training data shape: {train_df.shape}, Testing data shape: {test_df.shape}")
 
             # Splitting input and target features
@@ -129,7 +127,7 @@ class DataTransformation:
             transformed_input_test_feature = preprocessor_object.transform(input_feature_test_df)
             logging.info("Input features transformed successfully")
 
-            logging.info("Aplaying SMOTE Over sampling...")
+            logging.info("Applying SMOTE Over sampling...")
             smote = SMOTE()
             transformed_input_train_feature, target_feature_train_df = smote.fit_resample(
                 transformed_input_train_feature, target_feature_train_df)
@@ -150,7 +148,6 @@ class DataTransformation:
             # Save preprocessor object
             logging.info("Saving preprocessor object")
             save_object(self.data_transformation_config.transformed_object_file_path, preprocessor_object)
-            save_object("final_model/preprocessor.pkl", preprocessor_object)
             logging.info("Preprocessor object saved successfully")
 
             # Prepare data transformation artifact

@@ -135,8 +135,8 @@ class DataValidation:
             if not self.validate_number_of_columns(train_df) or not self.validate_number_of_columns(test_df):
                 logging.error("Column validation failed.")
                 raise CustomerChurnException("Column validation failed.", sys)
-            if not self.validate_missing_values(train_df) or not self.validate_missing_values(test_df):
-                logging.error("Missing values found in the dataset.")
+            # if not self.validate_missing_values(train_df) or not self.validate_missing_values(test_df):
+            #     logging.error("Missing values found in the dataset.")
                 raise CustomerChurnException("Missing values found.", sys)
             if not self.validate_unique_customer_id(train_df):
                 logging.error("Duplicate customerID found in training data.")

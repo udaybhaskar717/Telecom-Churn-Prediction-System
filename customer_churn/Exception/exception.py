@@ -11,12 +11,3 @@ class CustomerChurnException(Exception):  # ✅ Inherits from Exception
 
     def __str__(self):
         return f"Error occurred in [{self.file_name}] at line [{self.lineno}] - Message: {self.error_message}"
-
-# 3️⃣ Exception Handling with Logging
-if __name__ == '__main__':
-    try:
-        logging.info("Entering the Try block")
-        a = 1 / 0  # Intentional division by zero error
-    except Exception as e:
-        logging.error("Exception occurred", exc_info=True)
-        raise CustomerChurnException(e, sys)  # Raise custom exception

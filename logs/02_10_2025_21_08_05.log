@@ -1,0 +1,63 @@
+[ 2025-02-10 21:08:12,393 ] 23 root - INFO - Initialized Data Ingestion with config: <customer_churn.entity.config_entity.DataIngestionConfig object at 0x000001DEFD7E3050>
+[ 2025-02-10 21:08:12,393 ] 18 root - INFO - Initiate the data ingestion
+[ 2025-02-10 21:08:12,393 ] 105 root - INFO - Starting data ingestion process...
+[ 2025-02-10 21:08:12,393 ] 107 root - INFO - Fetching data from MongoDB...
+[ 2025-02-10 21:08:12,393 ] 32 root - INFO - Connecting to MongoDB...
+[ 2025-02-10 21:08:12,832 ] 38 root - INFO - Fetching data from MongoDB: Database = UDAYML, Collection = CustomerChurn
+[ 2025-02-10 21:08:17,272 ] 45 root - INFO - Dropping '_id' column from DataFrame
+[ 2025-02-10 21:08:17,304 ] 110 root - INFO - Saving raw data to feature store...
+[ 2025-02-10 21:08:17,304 ] 60 root - INFO - Creating feature store directory: Artifacts\02_10_2025_21_08_05\data_ingestion\feature_store\Telecome_Churn_Data
+[ 2025-02-10 21:08:17,304 ] 63 root - INFO - Saving raw data to feature store at: Artifacts\02_10_2025_21_08_05\data_ingestion\feature_store\Telecome_Churn_Data/WA_Fn-UseC_-Telco-Customer-Churn.csv
+[ 2025-02-10 21:08:17,363 ] 66 root - INFO - Data successfully saved in feature store.
+[ 2025-02-10 21:08:17,363 ] 113 root - INFO - Splitting data into train and test sets...
+[ 2025-02-10 21:08:17,363 ] 76 root - INFO - Performing train-test split on the dataframe...
+[ 2025-02-10 21:08:17,368 ] 80 root - INFO - Train-test split completed. Train size: 5634, Test size: 1409
+[ 2025-02-10 21:08:17,368 ] 83 root - INFO - Creating directory for train/test files: Artifacts\02_10_2025_21_08_05\data_ingestion\data_ingestion
+[ 2025-02-10 21:08:17,368 ] 86 root - INFO - Exporting train file to: Artifacts\02_10_2025_21_08_05\data_ingestion\data_ingestion\train.csv
+[ 2025-02-10 21:08:17,400 ] 91 root - INFO - Exporting test file to: Artifacts\02_10_2025_21_08_05\data_ingestion\data_ingestion\test.csv
+[ 2025-02-10 21:08:17,416 ] 96 root - INFO - Train and test files exported successfully.
+[ 2025-02-10 21:08:17,416 ] 116 root - INFO - Creating DataIngestionArtifact...
+[ 2025-02-10 21:08:17,416 ] 122 root - INFO - Data ingestion process completed successfully.
+[ 2025-02-10 21:08:17,428 ] 20 root - INFO - Data Ingestion Completed
+[ 2025-02-10 21:08:17,428 ] 14 root - INFO - Initializing DataValidation component.
+[ 2025-02-10 21:08:17,428 ] 17 root - INFO - Reading schema configuration from: data_schema\schema.yaml
+[ 2025-02-10 21:08:17,436 ] 19 root - INFO - Schema configuration loaded successfully.
+[ 2025-02-10 21:08:17,437 ] 26 root - INFO - Initiate data validation
+[ 2025-02-10 21:08:17,437 ] 130 root - INFO - Starting data validation process.
+[ 2025-02-10 21:08:17,437 ] 27 root - INFO - Reading data from file: Artifacts\02_10_2025_21_08_05\data_ingestion\data_ingestion\train.csv
+[ 2025-02-10 21:08:17,467 ] 27 root - INFO - Reading data from file: Artifacts\02_10_2025_21_08_05\data_ingestion\data_ingestion\test.csv
+[ 2025-02-10 21:08:17,478 ] 133 root - INFO - Training and testing datasets loaded successfully.
+[ 2025-02-10 21:08:17,478 ] 35 root - INFO - Validating number of columns in the dataset.
+[ 2025-02-10 21:08:17,478 ] 38 root - INFO - Column validation successful.
+[ 2025-02-10 21:08:17,478 ] 35 root - INFO - Validating number of columns in the dataset.
+[ 2025-02-10 21:08:17,478 ] 38 root - INFO - Column validation successful.
+[ 2025-02-10 21:08:17,478 ] 60 root - INFO - Validating uniqueness of customerID in the dataset.
+[ 2025-02-10 21:08:17,478 ] 64 root - INFO - All customerID values are unique.
+[ 2025-02-10 21:08:17,478 ] 72 root - INFO - Validating categorical values in the dataset.
+[ 2025-02-10 21:08:17,491 ] 77 root - INFO - All categorical values are valid.
+[ 2025-02-10 21:08:17,491 ] 148 root - INFO - Checking for dataset drift between training and testing datasets.
+[ 2025-02-10 21:08:17,491 ] 101 root - INFO - Detecting dataset drift between base and current datasets.
+[ 2025-02-10 21:08:17,715 ] 120 root - INFO - Saving drift report to: Artifacts\02_10_2025_21_08_05\data_validation\drift_report\report.yaml
+[ 2025-02-10 21:08:17,730 ] 122 root - INFO - Dataset drift detection completed. Drift status: True
+[ 2025-02-10 21:08:17,730 ] 152 root - INFO - Directory created for validated data: Artifacts\02_10_2025_21_08_05\data_validation\validated
+[ 2025-02-10 21:08:17,730 ] 154 root - INFO - Saving validated training and testing datasets.
+[ 2025-02-10 21:08:17,762 ] 157 root - INFO - Validated datasets saved successfully.
+[ 2025-02-10 21:08:17,762 ] 28 root - INFO - Data Validation Completed
+[ 2025-02-10 21:08:17,762 ] 31 root - INFO - data Transformation started
+[ 2025-02-10 21:08:17,762 ] 55 root - INFO - Initializing DataTransformation class
+[ 2025-02-10 21:08:17,762 ] 58 root - INFO - DataTransformation class initialized successfully
+[ 2025-02-10 21:08:17,762 ] 125 root - INFO - Entered initiate_data_transformation method of DataTransformation class
+[ 2025-02-10 21:08:17,762 ] 127 root - INFO - Starting data transformation process
+[ 2025-02-10 21:08:17,762 ] 130 root - INFO - Reading training and testing data
+[ 2025-02-10 21:08:17,821 ] 133 root - INFO - Training data shape: (5634, 21), Testing data shape: (1409, 21)
+[ 2025-02-10 21:08:17,822 ] 136 root - INFO - Splitting input and target features
+[ 2025-02-10 21:08:17,829 ] 142 root - INFO - Input and target features split successfully
+[ 2025-02-10 21:08:17,830 ] 145 root - INFO - Getting the preprocessor object
+[ 2025-02-10 21:08:17,830 ] 75 root - INFO - Entered get_data_transformer_object method of DataTransformation class
+[ 2025-02-10 21:08:17,830 ] 85 root - INFO - Identified numerical features: ['tenure', 'MonthlyCharges', 'TotalCharges']
+[ 2025-02-10 21:08:17,830 ] 86 root - INFO - Identified categorical features: ['gender', 'SeniorCitizen', 'Partner', 'Dependents', 'PhoneService', 'MultipleLines', 'InternetService', 'OnlineSecurity', 'OnlineBackup', 'DeviceProtection', 'TechSupport', 'StreamingTV', 'StreamingMovies', 'Contract', 'PaperlessBilling', 'PaymentMethod']
+[ 2025-02-10 21:08:17,830 ] 99 root - INFO - Numerical pipeline created with KNNImputer and StandardScaler
+[ 2025-02-10 21:08:17,830 ] 105 root - INFO - Categorical pipeline created with OneHotEncoder
+[ 2025-02-10 21:08:17,830 ] 115 root - INFO - ColumnTransformer created with custom preprocessor, numerical, and categorical pipelines
+[ 2025-02-10 21:08:17,830 ] 117 root - INFO - Exiting get_data_transformer_object method of DataTransformation class
+[ 2025-02-10 21:08:17,835 ] 192 root - ERROR - Error in initiate_data_transformation method: could not convert string to float: ' '

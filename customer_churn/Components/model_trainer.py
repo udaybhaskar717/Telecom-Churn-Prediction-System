@@ -56,70 +56,78 @@ class ModelTrainer:
             else:
                 mlflow.sklearn.log_model(best_model,"model")
 
-    def train_model(self,X_train,y_train,x_test,y_test):
+    def train_model(self, X_train, y_train, x_test, y_test):
+        models = {
+            "RandomForest": RandomForestClassifier(verbose=1),
+            "GradientBoosting": GradientBoostingClassifier(verbose=1),
+            "AdaBoost": AdaBoostClassifier(),
+            "DecisionTree": DecisionTreeClassifier(),
+            "KNN": KNeighborsClassifier(),
+            "LogisticRegression": LogisticRegression()
+        }
+        param_grids = {
+            "RandomForest": {'n_estimators': [100, 200], 'max_depth': [10, 20]},
+            "GradientBoosting": {'n_estimators': [100, 200], 'learning_rate': [0.01, 0.1]},
+            "AdaBoost": {'n_estimators': [50, 100]},
+            "DecisionTree": {'max_depth': [5, 10, 20]},
+            "KNN": {'n_neighbors': [3, 5, 7]},
+            "LogisticRegression": {'C': [0.1, 1, 10]}
+        }
+        
+        model_report: dict = evaluate_models(X_train=X_train, y_train=y_train, X_test=x_test, y_test=y_test,
+                                            models=models, param=param_grids)
+
+        ## Get the best model based on score
+        best_model_score = max(sorted(model_report.values()))
+        best_model_name = list(model_report.keys())[list(model_report.values()).index(best_model_score)]
+        best_model = models[best_model_name]
+
+        ## Predict on train and test
+        y_train_pred = best_model.predict(X_train)
+        y_test_pred = best_model.predict(x_test)
+
+        classification_train_metric = get_classification_score(y_true=y_train, y_pred=y_train_pred)
+        classification_test_metric = get_classification_score(y_true=y_test, y_pred=y_test_pred)
+
+        ## Start a single MLflow run
+        mlflow.set_registry_uri("https://dagshub.com/udaybhaskar717/Telecom-Churn-Prediction-System.mlflow")
+        tracking_url_type_score = urlparse(mlflow.get_tracking_uri()).scheme
+
+        with mlflow.start_run():
+            mlflow.log_param("model_name", best_model_name)
             
-            
-            
-            models = {
-                "RandomForest": RandomForestClassifier(verbose=1),
-                "GradientBoosting": GradientBoostingClassifier(verbose=1),
-                "AdaBoost": AdaBoostClassifier(),
-                "DecisionTree": DecisionTreeClassifier(),
-                "KNN": KNeighborsClassifier(),
-                "LogisticRegression": LogisticRegression()
-            }
-            param_grids = {
-                "RandomForest": {'n_estimators': [100, 200], 'max_depth': [10, 20]},
-                "GradientBoosting": {'n_estimators': [100, 200], 'learning_rate': [0.01, 0.1]},
-                "AdaBoost": {'n_estimators': [50, 100]},
-                "DecisionTree": {'max_depth': [5, 10, 20]},
-                "KNN": {'n_neighbors': [3, 5, 7]},
-                "LogisticRegression": {'C': [0.1, 1, 10]}
-            }
-            model_report:dict=evaluate_models(X_train=X_train,y_train=y_train,X_test=x_test,y_test=y_test,
-                                          models=models,param=param_grids)
-            
-            ## To get best model score from dict
-            best_model_score = max(sorted(model_report.values()))
+            # Log training metrics
+            mlflow.log_metric("train_f1_score", classification_train_metric.f1_score)
+            mlflow.log_metric("train_precision", classification_train_metric.precision_score)
+            mlflow.log_metric("train_recall", classification_train_metric.recall_score)
 
-            ## To get best model name from dict
-            
+            # Log test metrics
+            mlflow.log_metric("test_f1_score", classification_test_metric.f1_score)
+            mlflow.log_metric("test_precision", classification_test_metric.precision_score)
+            mlflow.log_metric("test_recall", classification_test_metric.recall_score)
 
-            best_model_name = list(model_report.keys())[
-                list(model_report.values()).index(best_model_score)
-            ]
-            best_model = models[best_model_name]
-            y_train_pred=best_model.predict(X_train)
+            # Log the model
+            mlflow.sklearn.log_model(best_model, "model", registered_model_name=type(best_model).__name__)
 
-            classification_train_metric=get_classification_score(y_true=y_train,y_pred=y_train_pred)
-            
-            ## Track the experiements with mlflow
-            self.track_mlflow(best_model,classification_train_metric)
+        ## Save the model
+        preprocessor = load_object(file_path=self.data_transformation_artifact.transformed_object_file_path)
+        model_dir_path = os.path.dirname(self.model_trainer_config.trained_model_file_path)
+        os.makedirs(model_dir_path, exist_ok=True)
 
+        Churn_Model = ChurnModel(preprocessor=preprocessor, model=best_model)
+        save_object(self.model_trainer_config.trained_model_file_path, obj=Churn_Model)
+        save_object("final_model/model.pkl", best_model)
 
-            y_test_pred=best_model.predict(x_test)
-            classification_test_metric=get_classification_score(y_true=y_test,y_pred=y_test_pred)
+        ## Model Trainer Artifact
+        model_trainer_artifact = ModelTrainerArtifact(
+            trained_model_file_path=self.model_trainer_config.trained_model_file_path,
+            train_metric_artifact=classification_train_metric,
+            test_metric_artifact=classification_test_metric
+        )
+        logging.info(f"Model trainer artifact: {model_trainer_artifact}")
 
-            self.track_mlflow(best_model,classification_test_metric)
+        return model_trainer_artifact
 
-            preprocessor = load_object(file_path=self.data_transformation_artifact.transformed_object_file_path)
-                
-            model_dir_path = os.path.dirname(self.model_trainer_config.trained_model_file_path)
-            os.makedirs(model_dir_path,exist_ok=True)
-
-            Churn_Model=ChurnModel(preprocessor=preprocessor,model=best_model)
-            save_object(self.model_trainer_config.trained_model_file_path,obj=Churn_Model)
-            #model pusher
-            save_object("final_model/model.pkl",best_model)
-            
-
-            ## Model Trainer Artifact
-            model_trainer_artifact=ModelTrainerArtifact(trained_model_file_path=self.model_trainer_config.trained_model_file_path,
-                                train_metric_artifact=classification_train_metric,
-                                test_metric_artifact=classification_test_metric
-                                )
-            logging.info(f"Model trainer artifact: {model_trainer_artifact}")
-            return model_trainer_artifact
     def initiate_model_trainer(self)->ModelTrainerArtifact:
         try:
             train_file_path = self.data_transformation_artifact.transformed_train_file_path
